@@ -1,14 +1,15 @@
 package com.zyc.security.controller;
 
+import com.zyc.security.service.UserService;
+import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author zyc
@@ -18,19 +19,25 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/user")
 public class UserController {
 
-    @PreAuthorize("hasRole('USER')")
-    @ResponseBody
-    @GetMapping("/user1")
-    public Authentication getUser1(Authentication authentication) {
-        return authentication;
-    }
+    @Autowired
+    private UserService userService;
 
     @PreAuthorize("hasRole('ADMIN')")
     @ResponseBody
-    @GetMapping("/user2")
-    public Authentication getUser2() {
-        return SecurityContextHolder.getContext().getAuthentication();
+    @GetMapping("/getUserByNickName")
+    public ResponseEntity<UserDetails> getUserByNickName(@ApiParam(value = "用户昵称", required = true) @RequestParam String nickName) {
+        return ResponseEntity.ok(userService.loadUserByUsername(nickName));
     }
+
+//    /**
+//     * 登出请求
+//     *
+//     * @return
+//     */
+//    @PostMapping("/login")
+//    public void login() {
+//        return "666";
+//    }
 
 
     /**
@@ -39,15 +46,9 @@ public class UserController {
      * @return
      */
     @PostMapping("/login")
-    public String login() {
-        return "666";
+    public ResponseEntity<Authentication> login(Authentication authentication) {
+        return ResponseEntity.ok(authentication);
     }
-
-    @PostMapping("/logout")
-    public String logout() {
-        return "666";
-    }
-
 
     /**
      * @return 登录页面

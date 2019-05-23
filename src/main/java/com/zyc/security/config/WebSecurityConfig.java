@@ -1,5 +1,7 @@
 package com.zyc.security.config;
 
+import com.zyc.security.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -15,12 +17,15 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Autowired
+    private UserService userService;
+
     private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     /**
      * 不需要认证请求
      */
-    private String[] permitAllUrl = {"/user/loginPage", "/user/login", "/error", "/favicon.ico"};
+    private String[] permitAllUrl = {"/user/loginPage", "/favicon.ico"};
 
     /**
      * http安全配置
@@ -38,14 +43,29 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest()
                 .authenticated()
                 .and()
-                // 设置表单登录请求为/user/login并且设置登入用户名和密码字段名称（默认是username和password）
                 .formLogin()
+                .and()
+                // 表单登录配置
+                .formLogin()
+                // 获取登录页面请求
                 .loginPage("/user/loginPage")
+                // 处理登录请求的url（如果不设置UsernamePasswordAuthenticationFilter默认的处理url就是loginPage）
                 .loginProcessingUrl("/user/login")
+                // 认证成功后的重定向请求
+                .successForwardUrl("/index")
+                // 修改登录名字段名称
                 .usernameParameter("userName")
+                // 修改登录密码字段
                 .passwordParameter("password")
                 .and()
+                // 登出配置
+                .logout()
+                // 处理登出请求的url
+                .logoutUrl("/user/logout")
+                // 登出成功后重定向的url
+                .logoutSuccessUrl("/user/login")
                 // 禁用csrf，否则会报错Invalid csrf token
+                .and()
                 .csrf()
                 .disable()
         ;
@@ -54,17 +74,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth
-                // 在内存中生成两个用户以及拥有的角色
-                .inMemoryAuthentication()
-                .withUser("user1")
-                .password(passwordEncoder.encode("123456"))
-                .roles("USER")
-                .and()
-                .withUser("user2")
-                .password(passwordEncoder.encode("123456"))
-                .roles("USER", "ADMIN")
-                .and()
-                // 配置密码编码器（spring security5需要配置）
+                .userDetailsService(userService)
                 .passwordEncoder(passwordEncoder);
     }
 

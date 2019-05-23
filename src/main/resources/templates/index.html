@@ -3,9 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <title>首页</title>
+    <link href="/css/jquery/jquery.jsonview.css">
+    <script src="/js/common.js"></script>
+    <script src="/js/jquery/jquery-3.4.1.min.js"></script>
+    <script src="/js/jquery/jquery.jsonview.js"></script>
+    <script>
+        $(function () {
+            $("#getUserByNickName").click(function () {
+                $.ajax({
+                    type: 'get',
+                    url: security.serverDomain + '/user/getUserByNickName',
+                    data: {
+                        nickName: $("#nickName").val(),
+                    }
+                }).done(function (response) {
+                    $("#user").JSONView(response)
+                })
+            })
+        })
+    </script>
 </head>
 <body>
-<a href="/user/user1">user1信息</a>
-<a href="/user/user2">user2信息</a>
+<input id="nickName" type="text"/>
+<button id="getUserByNickName">查询用户</button>
+<br>
+<pre><code id="user"></code>
+</pre>
 </body>
 </html>

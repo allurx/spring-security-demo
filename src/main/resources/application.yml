@@ -1,5 +1,20 @@
 server:
   port: 8000
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/spring-security-demo?characterEncoding=utf8&autoReconnect=true&useSSL=false
+    username: root
+    password: 123456
+mybatis:
+  type-aliases-package: com.zyc.security.common.model
+  mapper-locations: classpath:mybatis/sql/*.xml
+  configuration:
+    auto-mapping-behavior: full
 logging:
   level:
+    com.zyc.security: debug
     org.springframework.security: debug
+enableSwagger: true
+
