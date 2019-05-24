@@ -1,6 +1,6 @@
 package com.zyc.security.mapper;
 
-import com.zyc.security.common.model.User;
+import com.zyc.security.model.User;
 
 /**
  * @author zyc

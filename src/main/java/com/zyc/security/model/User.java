@@ -1,5 +1,6 @@
-package com.zyc.security.common.model;
+package com.zyc.security.model;
 
+import com.alibaba.fastjson.JSON;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -29,6 +30,8 @@ public class User implements UserDetails {
 
     @ApiModelProperty("用户密码")
     private String password;
+
+    private String token;
 
     @ApiModelProperty("用户角色")
     private List<Role> roles;
@@ -66,5 +69,10 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return JSON.toJSONString(this);
     }
 }

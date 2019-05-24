@@ -1,12 +1,13 @@
 package com.zyc.security.controller;
 
+import com.zyc.security.model.ro.UsernamePasswordLoginRo;
 import com.zyc.security.service.UserService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 /**
  * @author zyc
  */
+@Api(tags = "用户")
 @Slf4j
 @Controller
 @RequestMapping("/user")
@@ -36,8 +38,8 @@ public class UserController {
      * @return
      */
     @PostMapping("/login")
-    public ResponseEntity<Authentication> login(Authentication authentication) {
-        return ResponseEntity.ok(authentication);
+    public ResponseEntity<UsernamePasswordLoginRo> login(@RequestBody UsernamePasswordLoginRo usernamePasswordLoginRo) {
+        return ResponseEntity.ok(usernamePasswordLoginRo);
     }
 
 }

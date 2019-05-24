@@ -3,9 +3,9 @@
 <mapper namespace="com.zyc.security.mapper.UserMapper">
 
     <!--根据昵称查询用户-->
-    <resultMap id="getUserByNickName" type="com.zyc.security.common.model.User">
+    <resultMap id="getUserByNickName" type="com.zyc.security.model.User">
         <id column="id" property="id"/>
-        <collection property="roles" ofType="com.zyc.security.common.model.Role">
+        <collection property="roles" ofType="com.zyc.security.model.Role">
             <id column="roleId" property="id"/>
         </collection>
     </resultMap>

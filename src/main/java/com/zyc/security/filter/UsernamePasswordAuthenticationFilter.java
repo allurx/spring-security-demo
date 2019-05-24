@@ -2,10 +2,12 @@ package com.zyc.security.filter;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.util.StreamUtils;
 import org.springframework.util.StringUtils;
@@ -22,8 +24,10 @@ import java.nio.charset.StandardCharsets;
 public class UsernamePasswordAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
 
 
-    public UsernamePasswordAuthenticationFilter() {
+    public UsernamePasswordAuthenticationFilter(AuthenticationManager authenticationManager, AuthenticationSuccessHandler successHandler) {
         super(new AntPathRequestMatcher("/user/login", "POST"));
+        setAuthenticationManager(authenticationManager);
+        setAuthenticationSuccessHandler(successHandler);
     }
 
     @Override
@@ -32,7 +36,7 @@ public class UsernamePasswordAuthenticationFilter extends AbstractAuthentication
         String username = null, password = null;
         if (StringUtils.hasText(body)) {
             JSONObject jsonObject = JSON.parseObject(body);
-            username = jsonObject.getString("username");
+            username = jsonObject.getString("nickname");
             password = jsonObject.getString("password");
         }
 
@@ -48,4 +52,5 @@ public class UsernamePasswordAuthenticationFilter extends AbstractAuthentication
                 username, password);
         return this.getAuthenticationManager().authenticate(token);
     }
+
 }

@@ -16,9 +16,11 @@
     <description>spring-security</description>
 
     <properties>
+        <commons-lang3.version>3.8</commons-lang3.version>
         <druid.version>1.1.16</druid.version>
         <fastjson.version>1.2.58</fastjson.version>
         <java.version>1.8</java.version>
+        <jwt.version>0.9.1</jwt.version>
         <mysql-connector-java.version>8.0.11</mysql-connector-java.version>
         <mybatis.version>2.0.1</mybatis.version>
         <swagger.version>2.9.2</swagger.version>
@@ -80,6 +82,18 @@
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
             <version>${fastjson.version}</version>
+        </dependency>
+        <!--jwt-->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>${jwt.version}</version>
+        </dependency>
+        <!-- 工具包 -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${commons-lang3.version}</version>
         </dependency>
         <!--test-->
         <dependency>

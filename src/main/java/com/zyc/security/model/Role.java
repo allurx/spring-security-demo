@@ -1,4 +1,4 @@
-package com.zyc.security.common.model;
+package com.zyc.security.model;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
