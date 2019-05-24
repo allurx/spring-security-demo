@@ -1,4 +1,4 @@
-package com.xunqu.core.config;
+package com.zyc.security.config;
 
 
 import com.zyc.security.common.constant.Security;
@@ -30,7 +30,7 @@ import static com.google.common.collect.Lists.newArrayList;
 @Configuration
 public class SwaggerConfig {
 
-    @Value("${swagger.enable}")
+    @Value("${enableSwagger}")
     private boolean enableSwagger;
 
     @Bean

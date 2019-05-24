@@ -29,16 +29,6 @@ public class UserController {
         return ResponseEntity.ok(userService.loadUserByUsername(nickName));
     }
 
-//    /**
-//     * 登出请求
-//     *
-//     * @return
-//     */
-//    @PostMapping("/login")
-//    public void login() {
-//        return "666";
-//    }
-
 
     /**
      * 登录请求
@@ -50,11 +40,4 @@ public class UserController {
         return ResponseEntity.ok(authentication);
     }
 
-    /**
-     * @return 登录页面
-     */
-    @RequestMapping("/loginPage")
-    public String loginPage() {
-        return "login";
-    }
 }

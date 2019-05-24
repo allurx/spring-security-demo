@@ -1,5 +1,6 @@
 package com.zyc.security.config;
 
+import com.zyc.security.filter.UsernamePasswordAuthenticationFilter;
 import com.zyc.security.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -25,7 +26,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     /**
      * 不需要认证请求
      */
-    private String[] permitAllUrl = {"/user/loginPage", "/favicon.ico"};
+    private String[] permitAllUrl = {"/swagger-ui.html", "/webjars/**","/swagger-resources/**"};
 
     /**
      * http安全配置
@@ -39,34 +40,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // 不需要认证的请求
                 .antMatchers(permitAllUrl)
                 .permitAll()
-                // 其它任何请求都需要认证
+                // 任何请求都需要认证
                 .anyRequest()
                 .authenticated()
                 .and()
-                .formLogin()
-                .and()
-                // 表单登录配置
-                .formLogin()
-                // 获取登录页面请求
-                .loginPage("/user/loginPage")
-                // 处理登录请求的url（如果不设置UsernamePasswordAuthenticationFilter默认的处理url就是loginPage）
-                .loginProcessingUrl("/user/login")
-                // 认证成功后的重定向请求
-                .successForwardUrl("/index")
-                // 修改登录名字段名称
-                .usernameParameter("userName")
-                // 修改登录密码字段
-                .passwordParameter("password")
-                .and()
-                // 登出配置
-                .logout()
-                // 处理登出请求的url
-                .logoutUrl("/user/logout")
-                // 登出成功后重定向的url
-                .logoutSuccessUrl("/user/login")
-                // 禁用csrf，否则会报错Invalid csrf token
-                .and()
+                // 添加用户名密码认证过滤器
+                .addFilterAt(new UsernamePasswordAuthenticationFilter(), org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter.class)
+                // 禁用session
+                .sessionManagement()
+                .disable()
+                // 禁用csrf
                 .csrf()
+                .disable()
+                // 禁用登出过滤器
+                .logout()
                 .disable()
         ;
     }
