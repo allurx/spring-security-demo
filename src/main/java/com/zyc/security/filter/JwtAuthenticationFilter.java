@@ -38,16 +38,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
             return;
         }
-        try {
-            String jwt = request.getHeader(Security.TOKEN);
-            JwtAuthenticationToken jwtAuthenticationToken = new JwtAuthenticationToken(jwt, "");
-            Authentication authentication = authenticationManager.authenticate(jwtAuthenticationToken);
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-        } catch (Throwable e) {
-            log.error(request.getRequestURI() + "：" + e.getMessage(), e);
-        } finally {
-            filterChain.doFilter(request, response);
-        }
+        String jwt = request.getHeader(Security.TOKEN);
+        JwtAuthenticationToken jwtAuthenticationToken = new JwtAuthenticationToken(jwt, "");
+        Authentication authentication = authenticationManager.authenticate(jwtAuthenticationToken);
+        log.debug("Updating SecurityContextHolder to contain：" + authentication);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        filterChain.doFilter(request, response);
 
     }
 }

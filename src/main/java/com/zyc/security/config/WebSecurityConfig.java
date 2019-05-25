@@ -52,6 +52,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // 添加用户名密码认证过滤器
                 .addFilterAt(new UsernamePasswordAuthenticationFilter(authenticationManager()), org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(new JwtAuthenticationFilter(authenticationManager()), UsernamePasswordAuthenticationFilter.class)
+                // 配置认证失败和拒绝访问处理器
+                .exceptionHandling()
+                .authenticationEntryPoint(null)
+                .accessDeniedHandler(null)
+                .and()
                 // 响应头设置
                 //.headers()
                 //.addHeaderWriter(staticHeadersWriter)
@@ -72,10 +77,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth
+                .authenticationProvider(new JwtAuthenticationProvider())
                 .userDetailsService(userService)
                 .passwordEncoder(passwordEncoder)
-                .and()
-                .authenticationProvider(new JwtAuthenticationProvider())
         ;
     }
 
