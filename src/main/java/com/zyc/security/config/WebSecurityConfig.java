@@ -1,7 +1,9 @@
 package com.zyc.security.config;
 
+import com.zyc.security.common.constant.Security;
+import com.zyc.security.filter.JwtAuthenticationFilter;
+import com.zyc.security.filter.JwtAuthenticationProvider;
 import com.zyc.security.filter.UsernamePasswordAuthenticationFilter;
-import com.zyc.security.handler.UsernamePasswordAuthenticationSuccessHandler;
 import com.zyc.security.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -9,8 +11,10 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.header.writers.StaticHeadersWriter;
 
 /**
  * @author zyc
@@ -23,6 +27,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private UserService userService;
 
     private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+    private StaticHeadersWriter staticHeadersWriter = new StaticHeadersWriter("Access-Control-Allow-Headers", Security.TOKEN);
 
     /**
      * http安全配置
@@ -44,10 +50,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticated()
                 .and()
                 // 添加用户名密码认证过滤器
-                .addFilterAt(new UsernamePasswordAuthenticationFilter(authenticationManagerBean(), new UsernamePasswordAuthenticationSuccessHandler()), org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter.class)
-                // 禁用session
+                .addFilterAt(new UsernamePasswordAuthenticationFilter(authenticationManager()), org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new JwtAuthenticationFilter(authenticationManager()), UsernamePasswordAuthenticationFilter.class)
+                // 响应头设置
+                //.headers()
+                //.addHeaderWriter(staticHeadersWriter)
+                //.and()
+                // 不通过HttpSession来获取SecurityContext
                 .sessionManagement()
-                .disable()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
                 // 禁用csrf
                 .csrf()
                 .disable()
@@ -62,8 +74,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         auth
                 .userDetailsService(userService)
                 .passwordEncoder(passwordEncoder)
+                .and()
+                .authenticationProvider(new JwtAuthenticationProvider())
         ;
     }
-
 
 }

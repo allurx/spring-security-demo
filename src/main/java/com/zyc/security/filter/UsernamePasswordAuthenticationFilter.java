@@ -2,6 +2,7 @@ package com.zyc.security.filter;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.zyc.security.handler.UsernamePasswordAuthenticationSuccessHandler;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -23,11 +24,12 @@ import java.nio.charset.StandardCharsets;
  */
 public class UsernamePasswordAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
 
+    private AuthenticationSuccessHandler authenticationSuccessHandler = new UsernamePasswordAuthenticationSuccessHandler();
 
-    public UsernamePasswordAuthenticationFilter(AuthenticationManager authenticationManager, AuthenticationSuccessHandler successHandler) {
+    public UsernamePasswordAuthenticationFilter(AuthenticationManager authenticationManager) {
         super(new AntPathRequestMatcher("/user/login", "POST"));
         setAuthenticationManager(authenticationManager);
-        setAuthenticationSuccessHandler(successHandler);
+        setAuthenticationSuccessHandler(authenticationSuccessHandler);
     }
 
     @Override

@@ -3,23 +3,23 @@
 <mapper namespace="com.zyc.security.mapper.UserMapper">
 
     <!--根据昵称查询用户-->
-    <resultMap id="getUserByNickName" type="com.zyc.security.model.User">
+    <resultMap id="getUserByNickname" type="com.zyc.security.model.User">
         <id column="id" property="id"/>
-        <collection property="roles" ofType="com.zyc.security.model.Role">
+        <collection property="authorities" ofType="com.zyc.security.model.Role">
             <id column="roleId" property="id"/>
         </collection>
     </resultMap>
-    <select id="getUserByNickName" resultMap="getUserByNickName">
+    <select id="getUserByNickname" resultMap="getUserByNickname">
         SELECT a.id,
-               a.user_name userName,
-               a.nick_name nickName,
+               a.user_name username,
+               a.nick_name nickname,
                a.password,
-               c.id roleId,
-               c.name
+               c.id        roleId,
+               c.name      authority
         FROM user a
                  INNER JOIN user_role b ON a.id = b.user_id
                  INNER JOIN role c ON b.role_id = c.id
-        WHERE nick_name = #{nickName}
+        WHERE nick_name = #{nickname}
           AND a.is_deleted = 0
     </select>
 </mapper>

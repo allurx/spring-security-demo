@@ -18,10 +18,10 @@ public class Role implements GrantedAuthority {
     private Integer id;
 
     @ApiModelProperty("角色名称")
-    private String name;
+    private String authority;
 
     @Override
     public String getAuthority() {
-        return name;
+        return authority;
     }
 }

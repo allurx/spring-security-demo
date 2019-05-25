@@ -17,7 +17,7 @@ public class UserServiceImpl implements UserService {
     private UserMapper userMapper;
 
     @Override
-    public UserDetails loadUserByUsername(String nickName) throws UsernameNotFoundException {
-        return userMapper.getUserByNickName(nickName);
+    public UserDetails loadUserByUsername(String nickname) throws UsernameNotFoundException {
+        return userMapper.getUserByNickname(nickname);
     }
 }

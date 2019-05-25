@@ -7,6 +7,18 @@ spring:
     url: jdbc:mysql://localhost:3306/spring-security-demo?characterEncoding=utf8&autoReconnect=true&useSSL=false
     username: root
     password: 123456
+  redis:
+    host: localhost
+    password: 123456
+    port: 6379
+    database: 6
+    timeout: 6000
+    lettuce:
+      pool:
+        max-active: 8
+        max-wait: -1ms
+        max-idle: 8
+        min-idle: 0
 mybatis:
   type-aliases-package: com.zyc.security.common.model
   mapper-locations: classpath:mybatis/sql/*.xml
@@ -16,5 +28,4 @@ logging:
   level:
     com.zyc.security: debug
     org.springframework.security: debug
-enableSwagger: true
 

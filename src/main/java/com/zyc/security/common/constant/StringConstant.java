@@ -15,5 +15,7 @@ public class StringConstant {
 
     public static final String TYP = "typ";
 
+    public static final String MARK = "mark";
+
     public static final String JSON_CONTENT_TYPE = "application/json; charset=utf-8";
 }

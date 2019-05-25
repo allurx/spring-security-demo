@@ -7,5 +7,5 @@ import com.zyc.security.model.User;
  */
 public interface UserMapper {
 
-    User getUserByNickName(String nickName);
+    User getUserByNickname(String nickname);
 }

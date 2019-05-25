@@ -26,9 +26,9 @@ public class UserController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @ResponseBody
-    @GetMapping("/getUserByNickName")
-    public ResponseEntity<UserDetails> getUserByNickName(@ApiParam(value = "用户昵称", required = true) @RequestParam String nickName) {
-        return ResponseEntity.ok(userService.loadUserByUsername(nickName));
+    @GetMapping("/getUserByNickname")
+    public ResponseEntity<UserDetails> getUserByNickName(@ApiParam(value = "用户昵称", required = true) @RequestParam String nickname) {
+        return ResponseEntity.ok(userService.loadUserByUsername(nickname));
     }
 
 

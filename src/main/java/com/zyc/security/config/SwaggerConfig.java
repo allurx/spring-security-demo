@@ -2,7 +2,6 @@ package com.zyc.security.config;
 
 
 import com.zyc.security.common.constant.Security;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -32,9 +31,6 @@ import static com.google.common.collect.Lists.newArrayList;
 @Configuration
 public class SwaggerConfig {
 
-    @Value("${enableSwagger}")
-    private boolean enableSwagger;
-
     @Bean
     public Docket createRestApi() {
         return new Docket(DocumentationType.SWAGGER_2)
@@ -42,7 +38,7 @@ public class SwaggerConfig {
                 .protocols(protocols())
                 .securitySchemes(securitySchemes())
                 .securityContexts(securityContexts())
-                .enable(enableSwagger)
+                .enable(true)
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.zyc.security"))
                 .build();
@@ -83,7 +79,7 @@ public class SwaggerConfig {
         return newArrayList(
                 SecurityContext.builder()
                         .securityReferences(defaultAuth())
-                        .forPaths(PathSelectors.regex(Security.SWAGGER_PATH_REGEX))
+                        .forPaths(PathSelectors.any())
                         .build()
         );
     }
