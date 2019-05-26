@@ -1,9 +1,7 @@
 package com.zyc.security.config;
 
 import com.zyc.security.common.constant.Security;
-import com.zyc.security.filter.JwtAuthenticationFilter;
-import com.zyc.security.filter.JwtAuthenticationProvider;
-import com.zyc.security.filter.UsernamePasswordAuthenticationFilter;
+import com.zyc.security.filter.*;
 import com.zyc.security.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -14,7 +12,12 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.header.Header;
+import org.springframework.security.web.header.HeaderWriterFilter;
 import org.springframework.security.web.header.writers.StaticHeadersWriter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author zyc
@@ -25,10 +28,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private UserService userService;
-
     private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    private StaticHeadersWriter staticHeadersWriter;
 
-    private StaticHeadersWriter staticHeadersWriter = new StaticHeadersWriter("Access-Control-Allow-Headers", Security.TOKEN);
+    // 跨域支持
+    {
+        List<Header> headers = new ArrayList<>();
+        headers.add(new Header("Access-Control-Allow-Origin", "*"));
+        headers.add(new Header("Access-Control-Allow-Methods", "GET, HEAD, POST, PUT, PATCH, DELETE, OPTIONS, TRACES"));
+        headers.add(new Header("Access-Control-Allow-Headers", Security.TOKEN));
+        staticHeadersWriter = new StaticHeadersWriter(headers);
+    }
 
     /**
      * http安全配置
@@ -45,33 +55,33 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/webjars/**",
                         "/v2/api-docs")
                 .permitAll()
-                // 任何请求都需要认证
+                // 其它任何请求都需要认证
                 .anyRequest()
                 .authenticated()
                 .and()
-                // 添加用户名密码认证过滤器
+                // 添加自定义的过滤器
                 .addFilterAt(new UsernamePasswordAuthenticationFilter(authenticationManager()), org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(new JwtAuthenticationFilter(authenticationManager()), UsernamePasswordAuthenticationFilter.class)
+                .addFilterAfter(new OptionsRequestFilter(), HeaderWriterFilter.class)
                 // 配置认证失败和拒绝访问处理器
                 .exceptionHandling()
-                .authenticationEntryPoint(null)
-                .accessDeniedHandler(null)
+                .authenticationEntryPoint(new MyAuthenticationEntryPoint())
+                .accessDeniedHandler(new MyAccessDeniedHandler())
                 .and()
                 // 响应头设置
-                //.headers()
-                //.addHeaderWriter(staticHeadersWriter)
-                //.and()
+                .headers()
+                .addHeaderWriter(staticHeadersWriter)
+                .and()
                 // 不通过HttpSession来获取SecurityContext
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                // 禁用csrf
+                // 禁用csrf过滤器
                 .csrf()
                 .disable()
-                // 禁用默认的登出过滤器
+                // 禁用登出过滤器
                 .logout()
-                .disable()
-        ;
+                .disable();
     }
 
     @Override

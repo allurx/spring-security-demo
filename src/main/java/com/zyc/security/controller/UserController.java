@@ -1,14 +1,11 @@
 package com.zyc.security.controller;
 
+import com.zyc.security.filter.UsernamePasswordAuthenticationFilter;
 import com.zyc.security.model.ro.UsernamePasswordLoginRo;
-import com.zyc.security.service.UserService;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,19 +18,24 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/user")
 public class UserController {
 
-    @Autowired
-    private UserService userService;
-
     @PreAuthorize("hasRole('ADMIN')")
     @ResponseBody
-    @GetMapping("/getUserByNickname")
-    public ResponseEntity<UserDetails> getUserByNickName(@ApiParam(value = "用户昵称", required = true) @RequestParam String nickname) {
-        return ResponseEntity.ok(userService.loadUserByUsername(nickname));
+    @GetMapping("/test1")
+    public ResponseEntity<String> test1() {
+        return ResponseEntity.ok("test1");
+    }
+
+    @PreAuthorize("hasRole('USER')")
+    @ResponseBody
+    @GetMapping("/test2")
+    public ResponseEntity<String> test2() {
+        return ResponseEntity.ok("test2");
     }
 
 
     /**
-     * 登录请求
+     * 登录请求，仅用来给swagger生成登录请求接口，方便调试。
+     * 具体认证是通过{@link UsernamePasswordAuthenticationFilter}实现的
      *
      * @return
      */

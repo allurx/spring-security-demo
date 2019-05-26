@@ -79,7 +79,8 @@ public class SwaggerConfig {
         return newArrayList(
                 SecurityContext.builder()
                         .securityReferences(defaultAuth())
-                        .forPaths(PathSelectors.any())
+                        // 配置需要ApiKey的请求
+                        .forPaths(PathSelectors.regex(Security.SWAGGER_PATH_REGEX))
                         .build()
         );
     }

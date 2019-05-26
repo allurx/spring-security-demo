@@ -25,6 +25,5 @@ public class UsernamePasswordAuthenticationSuccessHandler implements Authenticat
         response.setContentType(StringConstant.JSON_CONTENT_TYPE);
         response.setCharacterEncoding(StringConstant.UTF_8);
         response.getWriter().write(user.toString());
-
     }
 }
