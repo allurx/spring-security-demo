@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * 过滤jwt令牌请求
+ * jwt令牌过滤器
  *
  * @author zyc
  */

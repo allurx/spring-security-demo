@@ -78,6 +78,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth
                 .authenticationProvider(new JwtAuthenticationProvider())
+                // 配置了DaoAuthenticationProvider
                 .userDetailsService(userService)
                 .passwordEncoder(passwordEncoder)
         ;

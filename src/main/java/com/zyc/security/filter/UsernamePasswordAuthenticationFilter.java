@@ -19,7 +19,11 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
 /**
+ * 用户名密码认证过滤器
+ *
  * @author zyc
+ * @see org.springframework.security.authentication.dao.DaoAuthenticationProvider
+ * @see org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
  */
 public class UsernamePasswordAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
 
