@@ -6,7 +6,6 @@ import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -14,24 +13,32 @@ import org.springframework.web.bind.annotation.*;
  */
 @Api(tags = "用户")
 @Slf4j
-@Controller
+@RestController
 @RequestMapping("/user")
 public class UserController {
 
     @PreAuthorize("hasRole('ADMIN')")
-    @ResponseBody
     @GetMapping("/test1")
     public ResponseEntity<String> test1() {
         return ResponseEntity.ok("test1");
     }
 
     @PreAuthorize("hasRole('USER')")
-    @ResponseBody
     @GetMapping("/test2")
     public ResponseEntity<String> test2() {
         return ResponseEntity.ok("test2");
     }
 
+    @PreAuthorize("isAnonymous()")
+    @GetMapping("/test3")
+    public ResponseEntity<String> test3() {
+        return ResponseEntity.ok("test3");
+    }
+
+    @GetMapping("/test4")
+    public ResponseEntity<String> test4() {
+        return ResponseEntity.ok("test4");
+    }
 
     /**
      * 登录请求，仅用来给swagger生成登录请求接口，方便调试。

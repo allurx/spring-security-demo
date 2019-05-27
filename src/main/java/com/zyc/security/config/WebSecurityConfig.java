@@ -56,8 +56,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/v2/api-docs")
                 .permitAll()
                 // 其它任何请求都需要认证
-                .anyRequest()
-                .authenticated()
+                //.anyRequest()
+                //.authenticated()
                 .and()
                 // 添加自定义的过滤器
                 .addFilterAt(new UsernamePasswordAuthenticationFilter(authenticationManager()), org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter.class)
