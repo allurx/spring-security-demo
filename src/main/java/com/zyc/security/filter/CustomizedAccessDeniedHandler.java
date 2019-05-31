@@ -16,7 +16,7 @@ import java.io.IOException;
  *
  * @author zyc
  */
-public class MyAccessDeniedHandler implements AccessDeniedHandler {
+public class CustomizedAccessDeniedHandler implements AccessDeniedHandler {
 
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {

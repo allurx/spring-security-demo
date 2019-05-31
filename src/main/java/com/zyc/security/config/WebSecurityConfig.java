@@ -65,8 +65,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilterAfter(new OptionsRequestFilter(), HeaderWriterFilter.class)
                 // 配置认证失败和拒绝访问处理器
                 .exceptionHandling()
-                .authenticationEntryPoint(new MyAuthenticationEntryPoint())
-                .accessDeniedHandler(new MyAccessDeniedHandler())
+                .authenticationEntryPoint(new CustomizedAuthenticationEntryPoint())
+                .accessDeniedHandler(new CustomizedAccessDeniedHandler())
                 .and()
                 // 响应头设置
                 .headers()

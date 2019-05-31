@@ -16,7 +16,7 @@ import java.io.IOException;
  *
  * @author zyc
  */
-public class MyAuthenticationEntryPoint implements AuthenticationEntryPoint {
+public class CustomizedAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
