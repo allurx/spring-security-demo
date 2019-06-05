@@ -6,7 +6,7 @@
 认证令牌
 ### 1.2、 [swagger](https://swagger.io/tools/swagger-ui/)
 接口文档
-### 1.3、 redis
+### 1.3、 [redis](https://redis.io/)
 存储用户信息
 
 ## 二、版本信息

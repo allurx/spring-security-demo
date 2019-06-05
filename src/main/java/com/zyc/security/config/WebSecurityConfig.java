@@ -40,12 +40,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         staticHeadersWriter = new StaticHeadersWriter(headers);
     }
 
-    /**
-     * http安全配置
-     *
-     * @param http http安全对象
-     * @throws Exception http安全异常信息
-     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
