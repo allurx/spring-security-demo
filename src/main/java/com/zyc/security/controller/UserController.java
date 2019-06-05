@@ -1,6 +1,6 @@
 package com.zyc.security.controller;
 
-import com.zyc.security.filter.UsernamePasswordAuthenticationFilter;
+import com.zyc.security.security.UsernamePasswordAuthenticationFilter;
 import com.zyc.security.model.ro.UsernamePasswordLoginRo;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;

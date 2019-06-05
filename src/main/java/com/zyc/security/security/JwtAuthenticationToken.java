@@ -1,4 +1,4 @@
-package com.zyc.security.filter;
+package com.zyc.security.security;
 
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;

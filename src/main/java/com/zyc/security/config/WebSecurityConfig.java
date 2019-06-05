@@ -1,7 +1,7 @@
 package com.zyc.security.config;
 
 import com.zyc.security.common.constant.Security;
-import com.zyc.security.filter.*;
+import com.zyc.security.security.*;
 import com.zyc.security.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
