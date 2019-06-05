@@ -2,9 +2,9 @@
 
 ## 一、涉及到的技术
 
-### 1.1、 jwt
+### 1.1、 [jwt](https://jwt.io/)
 认证令牌
-### 1.2、 swagger
+### 1.2、 [swagger](https://swagger.io/tools/swagger-ui/)
 接口文档
 ### 1.3、 redis
 存储用户信息
