@@ -25,4 +25,7 @@
 1.8
 ```
 ## 三、启动项目
-运行项目，在浏览器访问localhost:9000/swagger-ui.html，选择对应的接口即可进行测试。
+### 3.1、运行项目，在浏览器访问localhost:9000/swagger-ui.html
+### 3.2、选择登陆接口，默认的三个用户（admin，user1,user2)的密码都是123456
+### 3.3、点击swagger右上角的Authorize按钮，将登陆返回的token信息填入
+### 3.4、对相应的接口进行认证权限测试
