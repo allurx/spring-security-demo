@@ -1,4 +1,4 @@
-package com.zyc.security.filter;
+package com.zyc.security.security;
 
 import com.zyc.security.common.constant.StringConstant;
 import org.springframework.security.core.AuthenticationException;
@@ -16,7 +16,7 @@ import java.io.IOException;
  *
  * @author zyc
  */
-public class MyAuthenticationEntryPoint implements AuthenticationEntryPoint {
+public class CustomizedAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {

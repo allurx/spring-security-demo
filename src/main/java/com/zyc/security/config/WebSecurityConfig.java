@@ -1,7 +1,7 @@
 package com.zyc.security.config;
 
 import com.zyc.security.common.constant.Security;
-import com.zyc.security.filter.*;
+import com.zyc.security.security.*;
 import com.zyc.security.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -40,12 +40,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         staticHeadersWriter = new StaticHeadersWriter(headers);
     }
 
-    /**
-     * http安全配置
-     *
-     * @param http http安全对象
-     * @throws Exception http安全异常信息
-     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
@@ -65,8 +59,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilterAfter(new OptionsRequestFilter(), HeaderWriterFilter.class)
                 // 配置认证失败和拒绝访问处理器
                 .exceptionHandling()
-                .authenticationEntryPoint(new MyAuthenticationEntryPoint())
-                .accessDeniedHandler(new MyAccessDeniedHandler())
+                .authenticationEntryPoint(new CustomizedAuthenticationEntryPoint())
+                .accessDeniedHandler(new CustomizedAccessDeniedHandler())
                 .and()
                 // 响应头设置
                 .headers()
