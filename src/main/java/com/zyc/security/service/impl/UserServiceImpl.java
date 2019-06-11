@@ -1,6 +1,6 @@
 package com.zyc.security.service.impl;
 
-import com.zyc.security.mapper.UserMapper;
+import com.zyc.security.dao.UserMapper;
 import com.zyc.security.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

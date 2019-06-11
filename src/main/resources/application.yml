@@ -21,7 +21,7 @@ spring:
         min-idle: 0
 mybatis:
   type-aliases-package: com.zyc.security.common.model
-  mapper-locations: classpath:mybatis/sql/*.xml
+  mapper-locations: classpath:mapper/*.xml
   configuration:
     auto-mapping-behavior: full
 logging:

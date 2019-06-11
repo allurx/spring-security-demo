@@ -5,7 +5,7 @@ package com.zyc.security.common.constant;
  */
 public class Security {
 
-    public static final String MAPPER_PACKAGE = "com.zyc.security.mapper";
+    public static final String MAPPER_PACKAGE = "com.zyc.security.dao";
 
     public static final String TOKEN = "Authentication";
 

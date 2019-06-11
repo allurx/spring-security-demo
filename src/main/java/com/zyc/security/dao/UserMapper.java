@@ -1,4 +1,4 @@
-package com.zyc.security.mapper;
+package com.zyc.security.dao;
 
 import com.zyc.security.model.User;
 
