@@ -9,8 +9,6 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
-import org.springframework.security.web.authentication.AuthenticationFailureHandler;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.util.StreamUtils;
 import org.springframework.util.StringUtils;
@@ -35,16 +33,15 @@ public class UsernamePasswordAuthenticationFilter extends AbstractAuthentication
     public UsernamePasswordAuthenticationFilter(AuthenticationManager authenticationManager) {
         super(new AntPathRequestMatcher("/user/login", "POST"));
         setAuthenticationManager(authenticationManager);
-        AuthenticationSuccessHandler authenticationSuccessHandler = new UsernamePasswordAuthenticationSuccessHandler();
-        setAuthenticationSuccessHandler(authenticationSuccessHandler);
-        AuthenticationFailureHandler authenticationFailureHandlerHandler = new UsernamePasswordAuthenticationFailureHandler();
-        setAuthenticationFailureHandler(authenticationFailureHandlerHandler);
+        setAuthenticationSuccessHandler(new UsernamePasswordAuthenticationSuccessHandler());
+        setAuthenticationFailureHandler(new UsernamePasswordAuthenticationFailureHandler());
     }
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException, IOException, ServletException {
         // 注意request.getInputStream()只能读取一次
         String body = StreamUtils.copyToString(request.getInputStream(), StandardCharsets.UTF_8);
+        String body1 = StreamUtils.copyToString(request.getInputStream(), StandardCharsets.UTF_8);
         String username = null, password = null;
         if (StringUtils.hasText(body)) {
             JSONObject jsonObject = JSON.parseObject(body);
