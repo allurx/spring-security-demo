@@ -1,17 +1,15 @@
 # spring-security-demo
 
-## 一、涉及到的技术
+## 涉及到的技术
 
-### 1.1、 [jwt](https://jwt.io/)
-认证令牌
-### 1.2、 [swagger](https://swagger.io/tools/swagger-ui/)
-接口文档
-### 1.3、 [redis](https://redis.io/)
-存储用户信息
-
-## 二、版本信息
-
-### 2.1、spring-boot
+### 认证令牌
+[jwt](https://jwt.io/)
+### 接口文档
+[swagger](https://swagger.io/tools/swagger-ui/)
+### 用户存储
+[redis](https://redis.io/)
+## 版本信息
+### spring-boot
 ```
 <parent>
     <groupId>org.springframework.boot</groupId>
@@ -19,18 +17,20 @@
     <version>2.1.5.RELEASE</version>
 </parent>
 ```
-### 2.2、mysql
+### mysql
 ```
 8.0.13
 ```
-### 2.3、jdk
+### jdk
 ```
 1.8
 ```
-## 三、运行
-### 3.1、访问swagger
+## 运行
+### 访问swagger
 启动项目，在浏览器访问localhost:9000/swagger-ui.html即可看到swagger页面
-### 3.2、用户登录
+### 用户登录
 选择登陆接口，默认的三个用户（admin，user1，user2）的密码都是123456
-### 3.3、测试接口
+### 测试接口
 点击swagger右上角的Authorize按钮，将登陆返回的token信息填入，然后对相应的接口进行认证权限测试
+### spring-security源码解析
+[spring-security源码解析](https://zyc.red)
