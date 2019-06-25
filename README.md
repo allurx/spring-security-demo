@@ -1,9 +1,8 @@
-## spring-security简单
-### 认证令牌
+## 认证令牌
 [jwt](https://jwt.io/)
-### 接口文档
+## 接口文档
 [swagger](https://swagger.io/tools/swagger-ui/)
-### 用户存储
+## 用户存储
 [redis](https://redis.io/)
 ## 版本信息
 ### spring-boot
