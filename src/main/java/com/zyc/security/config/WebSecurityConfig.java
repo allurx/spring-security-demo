@@ -22,7 +22,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserService userService;
     private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-    private String[] swaggerUrl = {"/swagger-ui.html", "/swagger-resources/**", "/webjars/**", "/v2/api-docs"};
+    private String[] permitAllUrls = {"/swagger-ui.html", "/swagger-resources/**", "/webjars/**", "/v2/api-docs"};
+    private String[] anonymousUrls = {"/user/test3"};
 
     public WebSecurityConfig(UserService userService) {
         // 禁用默认的配置
@@ -34,7 +35,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 // 不需要认证的请求
-                .antMatchers(swaggerUrl).permitAll()
+                .antMatchers(permitAllUrls).permitAll()
+                // 允许匿名访问的请求
+                .antMatchers(anonymousUrls).anonymous()
                 // 其它任何请求都需要认证
                 .anyRequest().authenticated().and()
                 // 添加用户名密码认证配置者
