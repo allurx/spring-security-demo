@@ -9,7 +9,7 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.util.StreamUtils;
 import org.springframework.util.StringUtils;
 
@@ -30,18 +30,14 @@ import java.nio.charset.StandardCharsets;
  */
 public class UsernamePasswordAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
 
-    public UsernamePasswordAuthenticationFilter(AuthenticationManager authenticationManager) {
-        super(new AntPathRequestMatcher("/user/login", "POST"));
-        setAuthenticationManager(authenticationManager);
-        setAuthenticationSuccessHandler(new UsernamePasswordAuthenticationSuccessHandler());
-        setAuthenticationFailureHandler(new UsernamePasswordAuthenticationFailureHandler());
+    public UsernamePasswordAuthenticationFilter(RequestMatcher requestMatcher) {
+        super(requestMatcher);
     }
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException, IOException, ServletException {
         // 注意request.getInputStream()只能读取一次
         String body = StreamUtils.copyToString(request.getInputStream(), StandardCharsets.UTF_8);
-        String body1 = StreamUtils.copyToString(request.getInputStream(), StandardCharsets.UTF_8);
         String username = null, password = null;
         if (StringUtils.hasText(body)) {
             JSONObject jsonObject = JSON.parseObject(body);

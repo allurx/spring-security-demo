@@ -1,6 +1,9 @@
 package com.zyc.security.security;
 
 import com.zyc.security.common.constant.Security;
+import com.zyc.security.common.util.WebUtil;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
@@ -26,6 +29,8 @@ import java.io.IOException;
  * @author zyc
  */
 @Slf4j
+@Getter
+@Setter
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     /**
@@ -35,10 +40,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private AuthenticationManager authenticationManager;
 
-    public JwtAuthenticationFilter(AuthenticationManager authenticationManager) {
-        this.authenticationManager = authenticationManager;
-    }
-
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         // 是否匹配请求
@@ -46,9 +47,20 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
             return;
         }
+        Authentication authentication;
         String jwt = request.getHeader(Security.TOKEN);
         JwtAuthenticationToken jwtAuthenticationToken = new JwtAuthenticationToken(jwt, "");
-        Authentication authentication = authenticationManager.authenticate(jwtAuthenticationToken);
+        try {
+            authentication = authenticationManager.authenticate(jwtAuthenticationToken);
+        } catch (SecurityException e) {
+            log.error(e.getMessage(), e);
+            WebUtil.response(e.getMessage());
+            return;
+        } catch (Throwable e) {
+            log.error(e.getMessage(), e);
+            WebUtil.response("系统繁忙，请稍后再试");
+            return;
+        }
         log.debug("Updating SecurityContextHolder to contain：" + authentication);
         SecurityContextHolder.getContext().setAuthentication(authentication);
         filterChain.doFilter(request, response);

@@ -3,7 +3,6 @@ package com.zyc.security.security;
 import com.zyc.security.common.constant.StringConstant;
 import com.zyc.security.common.util.TokenUtil;
 import com.zyc.security.model.User;
-import io.jsonwebtoken.JwtException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;
@@ -17,20 +16,14 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        User user;
-        try {
-            JwtAuthenticationToken jwtAuthenticationToken = (JwtAuthenticationToken) authentication;
-            String jwt = String.valueOf(jwtAuthenticationToken.getPrincipal());
-            user = TokenUtil.getUser(jwt);
-            String mark = TokenUtil.parseClaim(jwt, StringConstant.MARK, String.class);
-            if (!user.getMark().equals(mark)) {
-                throw new JwtException("账号已在其它地方登陆");
-            }
-        } catch (Throwable e) {
-            log.warn(e.getMessage());
-            user = null;
+        JwtAuthenticationToken jwtAuthenticationToken = (JwtAuthenticationToken) authentication;
+        String jwt = String.valueOf(jwtAuthenticationToken.getPrincipal());
+        User user = TokenUtil.getUser(jwt);
+        String mark = TokenUtil.parseClaim(jwt, StringConstant.MARK, String.class);
+        if (!user.getMark().equals(mark)) {
+            throw new SecurityException("账号已在其它地方登陆");
         }
-        return new JwtAuthenticationToken(user, "", user == null ? null : user.getAuthorities());
+        return new JwtAuthenticationToken(user, "", user.getAuthorities());
     }
 
     @Override
