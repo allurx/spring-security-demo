@@ -22,6 +22,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserService userService;
     private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    private String[] swaggerUrl = {"/swagger-ui.html", "/swagger-resources/**", "/webjars/**", "/v2/api-docs"};
 
     public WebSecurityConfig(UserService userService) {
         // 禁用默认的配置
@@ -33,24 +34,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 // 不需要认证的请求
-                .antMatchers("/swagger-ui.html",
-                        "/swagger-resources/**",
-                        "/webjars/**",
-                        "/v2/api-docs")
-                .permitAll()
+                .antMatchers(swaggerUrl).permitAll()
                 // 其它任何请求都需要认证
-                .anyRequest()
-                .authenticated()
+                .anyRequest().authenticated().and()
                 // 添加用户名密码认证配置者
-                .and()
-                .apply(new UsernamePasswordAuthenticationConfigurer<>())
-                .and()
+                .apply(new UsernamePasswordAuthenticationConfigurer<>()).and()
                 // 添加jwt认证配置者
-                .apply(new JwtAuthenticationConfigurer<>())
-                .and()
-                // 配置匿名过滤器
-                .anonymous()
-                .and()
+                .apply(new JwtAuthenticationConfigurer<>()).and()
+                // 添加匿名过滤器
+                .anonymous().and()
                 // 配置认证失败和拒绝访问处理器
                 .exceptionHandling()
                 .authenticationEntryPoint(new CustomizedAuthenticationEntryPoint())

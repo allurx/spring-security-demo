@@ -24,12 +24,10 @@ public class User implements UserDetails {
     @ApiModelProperty("用户id")
     private Integer id;
 
-    @ApiModelProperty("用户姓名")
+    @ApiModelProperty("用户名")
     private String username;
 
-    @ApiModelProperty("用户昵称")
-    private String nickname;
-
+    @JsonIgnore
     @ApiModelProperty("用户密码")
     private String password;
 
@@ -54,7 +52,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return nickname;
+        return username;
     }
 
     @JsonIgnore

@@ -52,6 +52,7 @@ public class UsernamePasswordAuthenticationFilter extends AbstractAuthentication
         }
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
                 username, password);
+        token.setDetails(authenticationDetailsSource.buildDetails(request));
         return this.getAuthenticationManager().authenticate(token);
     }
 

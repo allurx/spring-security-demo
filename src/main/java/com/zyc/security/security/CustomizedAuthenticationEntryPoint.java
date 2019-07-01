@@ -1,6 +1,6 @@
 package com.zyc.security.security;
 
-import com.zyc.security.common.constant.StringConstant;
+import com.zyc.security.common.util.WebUtil;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.access.ExceptionTranslationFilter;
@@ -20,7 +20,6 @@ public class CustomizedAuthenticationEntryPoint implements AuthenticationEntryPo
 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
-        response.setCharacterEncoding(StringConstant.UTF_8);
-        response.getWriter().write("用户未认证");
+        WebUtil.response("用户未认证");
     }
 }

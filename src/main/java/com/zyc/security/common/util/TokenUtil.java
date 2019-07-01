@@ -39,7 +39,7 @@ public class TokenUtil {
                 .ofNullable(token)
                 .flatMap(t -> Optional.of(parseClaim(t, StringConstant.USER_ID, Integer.class)))
                 .map(REDIS_UTIL::getUser)
-                .orElseThrow(() -> new SecurityException("缺失用户信息"));
+                .orElseThrow(new SecurityException("缺失用户信息"));
     }
 
     public static <T> T parseClaim(String token, String claim, Class<T> clazz) {

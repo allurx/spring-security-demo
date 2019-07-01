@@ -3,23 +3,22 @@
 <mapper namespace="com.zyc.security.dao.UserMapper">
 
     <!--根据昵称查询用户-->
-    <resultMap id="getUserByNickname" type="com.zyc.security.model.User">
+    <resultMap id="getUserByUsername" type="com.zyc.security.model.User">
         <id column="id" property="id"/>
         <collection property="authorities" ofType="com.zyc.security.model.Role">
             <id column="roleId" property="id"/>
         </collection>
     </resultMap>
-    <select id="getUserByNickname" resultMap="getUserByNickname">
+    <select id="getUserByUsername" resultMap="getUserByUsername">
         SELECT a.id,
                a.user_name username,
-               a.nick_name nickname,
                a.password,
                c.id        roleId,
                c.name      authority
         FROM user a
                  INNER JOIN user_role b ON a.id = b.user_id
                  INNER JOIN role c ON b.role_id = c.id
-        WHERE nick_name = #{nickname}
+        WHERE user_name = #{username}
           AND a.is_deleted = 0
     </select>
 </mapper>

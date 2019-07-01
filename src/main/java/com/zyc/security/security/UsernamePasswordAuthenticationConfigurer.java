@@ -15,19 +15,16 @@ import javax.servlet.Filter;
 /**
  * 用户名密码登录配置
  *
- * @param <B> 对{@link HttpSecurityBuilder}进行配置
+ * @param <B> 配置{@link HttpSecurityBuilder}
  * @author zyc
  * @see FormLoginConfigurer
  */
 public class UsernamePasswordAuthenticationConfigurer<B extends HttpSecurityBuilder<B>>
         extends AbstractAuthenticationFilterConfigurer<B, UsernamePasswordAuthenticationConfigurer<B>, UsernamePasswordAuthenticationFilter> {
 
-    private AuthenticationSuccessHandler authenticationSuccessHandler = new UsernamePasswordAuthenticationSuccessHandler();
-
-    private AuthenticationFailureHandler authenticationFailureHandler = new UsernamePasswordAuthenticationFailureHandler();
-
     private static AntPathRequestMatcher loginProcessingRequestMatcher = new AntPathRequestMatcher("/user/login", "POST");
-
+    private AuthenticationSuccessHandler authenticationSuccessHandler = new UsernamePasswordAuthenticationSuccessHandler();
+    private AuthenticationFailureHandler authenticationFailureHandler = new UsernamePasswordAuthenticationFailureHandler();
     private Class<? extends Filter> atFilter = org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter.class;
 
     public UsernamePasswordAuthenticationConfigurer() {

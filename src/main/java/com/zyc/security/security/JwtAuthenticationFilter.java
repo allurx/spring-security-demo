@@ -1,15 +1,16 @@
 package com.zyc.security.security;
 
 import com.zyc.security.common.constant.Security;
-import com.zyc.security.common.util.WebUtil;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.AuthenticationDetailsSource;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.security.web.util.matcher.RequestHeaderRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -19,6 +20,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+
+import static com.zyc.security.common.util.WebUtil.response;
 
 /**
  * Jwt令牌过滤器,该过滤器没有像{@link UsernamePasswordAuthenticationFilter}那样继承
@@ -33,6 +36,7 @@ import java.io.IOException;
 @Setter
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
+    protected AuthenticationDetailsSource<HttpServletRequest, ?> authenticationDetailsSource = new WebAuthenticationDetailsSource();
     /**
      * 只匹配带有Authentication请求头的请求
      */
@@ -48,17 +52,18 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             return;
         }
         Authentication authentication;
-        String jwt = request.getHeader(Security.TOKEN);
-        JwtAuthenticationToken jwtAuthenticationToken = new JwtAuthenticationToken(jwt, "");
         try {
+            String jwt = request.getHeader(Security.TOKEN);
+            JwtAuthenticationToken jwtAuthenticationToken = new JwtAuthenticationToken(jwt, "");
+            jwtAuthenticationToken.setDetails(authenticationDetailsSource.buildDetails(request));
             authentication = authenticationManager.authenticate(jwtAuthenticationToken);
         } catch (SecurityException e) {
             log.error(e.getMessage(), e);
-            WebUtil.response(e.getMessage());
+            response(e.getMessage());
             return;
         } catch (Throwable e) {
             log.error(e.getMessage(), e);
-            WebUtil.response("系统繁忙，请稍后再试");
+            response("系统繁忙，请稍后再试");
             return;
         }
         log.debug("Updating SecurityContextHolder to contain：" + authentication);
