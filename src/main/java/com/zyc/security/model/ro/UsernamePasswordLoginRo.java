@@ -13,8 +13,8 @@ import lombok.Setter;
 @ApiModel("登录信息")
 public class UsernamePasswordLoginRo {
 
-    @ApiModelProperty("昵称")
-    private String nickname;
+    @ApiModelProperty("用户名")
+    private String username;
 
     @ApiModelProperty("密码")
     private String password;

@@ -20,11 +20,11 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
 /**
- * 用户名密码认证过滤器,替换了spring自带的{@link UsernamePasswordAuthenticationFilter},
+ * 用户名密码认证过滤器,替换了spring自带的{@link org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter},
  * 该过滤器使用的{@link AuthenticationManager}是spring自带的{@link ProviderManager}
  *
  * @author zyc
- * @see UsernamePasswordAuthenticationFilter
+ * @see org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
  * @see ProviderManager
  * @see DaoAuthenticationProvider
  */
@@ -41,7 +41,7 @@ public class UsernamePasswordAuthenticationFilter extends AbstractAuthentication
         String username = null, password = null;
         if (StringUtils.hasText(body)) {
             JSONObject jsonObject = JSON.parseObject(body);
-            username = jsonObject.getString("nickname");
+            username = jsonObject.getString("username");
             password = jsonObject.getString("password");
         }
         if (username == null) {

@@ -22,7 +22,7 @@ import javax.servlet.Filter;
 public class UsernamePasswordAuthenticationConfigurer<B extends HttpSecurityBuilder<B>>
         extends AbstractAuthenticationFilterConfigurer<B, UsernamePasswordAuthenticationConfigurer<B>, UsernamePasswordAuthenticationFilter> {
 
-    private static AntPathRequestMatcher loginProcessingRequestMatcher = new AntPathRequestMatcher("/user/login", "POST");
+    private static RequestMatcher loginProcessingRequestMatcher = new AntPathRequestMatcher("/user/login", "POST");
     private AuthenticationSuccessHandler authenticationSuccessHandler = new UsernamePasswordAuthenticationSuccessHandler();
     private AuthenticationFailureHandler authenticationFailureHandler = new UsernamePasswordAuthenticationFailureHandler();
     private Class<? extends Filter> atFilter = org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter.class;
@@ -33,8 +33,6 @@ public class UsernamePasswordAuthenticationConfigurer<B extends HttpSecurityBuil
 
     @Override
     public void init(B builder) throws Exception {
-//        ExpressionUrlAuthorizationConfigurer<?> configurer = http.getConfigurer(ExpressionUrlAuthorizationConfigurer.class);
-//        configurer.getRegistry().antMatchers(loginProcessingRequestMatcher.getPattern()).permitAll();
     }
 
     @Override
