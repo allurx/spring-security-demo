@@ -37,7 +37,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.addFilter(new WebAsyncManagerIntegrationFilter())
+        http    // 添加异步认证管理者集成过滤器
+                .addFilter(new WebAsyncManagerIntegrationFilter())
                 // 添加用户名密码认证配置者
                 .apply(new UsernamePasswordAuthenticationConfigurer<>()).and()
                 // 添加jwt认证配置者
