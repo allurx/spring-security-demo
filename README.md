@@ -7,7 +7,7 @@
 [redis](https://redis.io/)
 ## 版本信息
 ### spring-boot
-```
+```xml
 <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
