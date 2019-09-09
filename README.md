@@ -7,7 +7,7 @@
 [redis](https://redis.io/)
 ## 版本信息
 ### spring-boot
-```
+```xml
 <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
@@ -24,7 +24,7 @@
 ```
 ## 运行
 ### 访问swagger
-启动项目，在浏览器访问localhost:9000/swagger-ui.html即可看到swagger页面
+启动项目，在浏览器访问`localhost:9000/swagger-ui.html`即可看到swagger页面
 ### 用户登录
 选择登陆接口，默认的三个用户（admin，user1，user2）的密码都是123456
 ### 测试接口
