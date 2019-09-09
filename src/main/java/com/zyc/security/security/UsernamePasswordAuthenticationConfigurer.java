@@ -32,11 +32,11 @@ public class UsernamePasswordAuthenticationConfigurer<B extends HttpSecurityBuil
     }
 
     @Override
-    public void init(B builder) throws Exception {
+    public void init(B builder) {
     }
 
     @Override
-    public void configure(B builder) throws Exception {
+    public void configure(B builder) {
         UsernamePasswordAuthenticationFilter filter = this.getAuthenticationFilter();
         filter.setAuthenticationSuccessHandler(authenticationSuccessHandler);
         filter.setAuthenticationFailureHandler(authenticationFailureHandler);

@@ -46,7 +46,7 @@ public class UserController {
      * 登录请求，仅用来给swagger生成登录请求接口，方便调试。
      * 具体认证是通过{@link UsernamePasswordAuthenticationFilter}实现的
      *
-     * @return
+     * @return {@link ResponseEntity}
      */
     @PostMapping("/login")
     public ResponseEntity<UsernamePasswordLoginRo> login(@RequestBody UsernamePasswordLoginRo usernamePasswordLoginRo) {

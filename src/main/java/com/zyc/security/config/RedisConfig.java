@@ -20,7 +20,7 @@ public class RedisConfig {
 
     @SuppressWarnings({"rawtypes", "unchecked"})
     @Bean(name = "jsonRedisTemplate")
-    public RedisTemplate<Object, Object> redisJSONTemplate(RedisConnectionFactory connectionFactory) {
+    public RedisTemplate<Object, Object> redisJsonTemplate(RedisConnectionFactory connectionFactory) {
         RedisTemplate<Object, Object> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(connectionFactory);
         // 使用Jackson2JsonRedisSerialize替换默认序列化

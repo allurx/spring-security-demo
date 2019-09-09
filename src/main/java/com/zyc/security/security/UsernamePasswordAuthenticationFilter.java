@@ -13,7 +13,6 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.util.StreamUtils;
 import org.springframework.util.StringUtils;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -35,7 +34,7 @@ public class UsernamePasswordAuthenticationFilter extends AbstractAuthentication
     }
 
     @Override
-    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException, IOException, ServletException {
+    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException, IOException {
         // 注意request.getInputStream()只能读取一次
         String body = StreamUtils.copyToString(request.getInputStream(), StandardCharsets.UTF_8);
         String username = null, password = null;

@@ -4,10 +4,8 @@ import org.springframework.security.authentication.*;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 import static com.zyc.security.common.util.WebUtil.response;
 
@@ -19,7 +17,7 @@ import static com.zyc.security.common.util.WebUtil.response;
 public class UsernamePasswordAuthenticationFailureHandler implements AuthenticationFailureHandler {
 
     @Override
-    public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
+    public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) {
         // org.springframework.security.authentication.dao.DaoAuthenticationProvider.retrieveUser
         if (exception instanceof InternalAuthenticationServiceException) {
             response("找不到该用户");

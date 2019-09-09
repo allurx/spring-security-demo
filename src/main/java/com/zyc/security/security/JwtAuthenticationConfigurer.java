@@ -18,13 +18,13 @@ public class JwtAuthenticationConfigurer<B extends HttpSecurityBuilder<B>>
     private Class<? extends Filter> beforeFilter = UsernamePasswordAuthenticationFilter.class;
 
     @Override
-    public void init(B builder) throws Exception {
+    public void init(B builder) {
         JwtAuthenticationProvider jwtAuthenticationProvider = new JwtAuthenticationProvider();
         builder.authenticationProvider(jwtAuthenticationProvider);
     }
 
     @Override
-    public void configure(B builder) throws Exception {
+    public void configure(B builder) {
         JwtAuthenticationFilter filter = new JwtAuthenticationFilter();
         filter.setAuthenticationManager(builder.getSharedObject(AuthenticationManager.class));
         ((HttpSecurity) builder).addFilterBefore(postProcess(filter), beforeFilter);

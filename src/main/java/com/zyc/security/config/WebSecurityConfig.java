@@ -22,11 +22,11 @@ import org.springframework.security.web.context.request.async.WebAsyncManagerInt
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private final UserService userService;
     /**
      * 整个spring-security需要忽略的请求,作者建议这些请求一般是一些静态资源
      */
     private String[] ignoreUrls = {"/swagger-ui.html", "/swagger-resources/**", "/webjars/**", "/v2/api-docs"};
-    private final UserService userService;
     private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     public WebSecurityConfig(UserService userService) {
@@ -62,7 +62,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    public void configure(WebSecurity web) throws Exception {
+    public void configure(WebSecurity web) {
         web.ignoring()
                 // 忽略的请求
                 .antMatchers(ignoreUrls).and()
