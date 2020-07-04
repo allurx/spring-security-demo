@@ -30,4 +30,4 @@
 ### 测试接口
 点击swagger右上角的Authorize按钮，将登陆返回的token信息填入，然后对相应的接口进行认证权限测试
 ### spring-security源码解析
-[spring-security源码解析](https://www.zyc.red/categories/spring/spring-security/)
+[spring-security源码解析](https://www.zyc.red/categories/Spring/Spring-Security/)
