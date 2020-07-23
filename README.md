@@ -23,6 +23,9 @@
 1.8
 ```
 ## 运行
+### 创建数据库
+创建一个名称为spring-security-demo的mysql数据库，然后执行[spring-security-demo.sql](https://github.com/Allurx/spring-security-demo/blob/master/src/main/resources/spring-security-demo.sql
+)这个sql脚本初始化表结构
 ### 访问swagger
 启动项目，在浏览器访问`localhost:9000/swagger-ui.html`即可看到swagger页面
 ### 用户登录
