@@ -44,7 +44,7 @@ public class UserService implements UserDetailsService {
         log.info("The current request token is: " + token);
         return Optional.ofNullable(token)
                 .flatMap(t -> Optional.of(TokenUtil.parseClaim(t, StringConstant.USER_ID, Integer.class)))
-                .map(redisService::getUser)
+                .map(redisService::getSession)
                 .orElseThrow(new SecurityException("缺失用户信息"));
     }
 

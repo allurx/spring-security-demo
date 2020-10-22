@@ -1,5 +1,6 @@
 package com.zyc.security.config;
 
+import com.zyc.security.model.AnonymousUser;
 import com.zyc.security.security.CustomizedAccessDeniedHandler;
 import com.zyc.security.security.CustomizedAuthenticationEntryPoint;
 import com.zyc.security.security.JwtAuthenticationConfigurer;
@@ -13,7 +14,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter;
 
 /**
  * @author zyc
@@ -23,11 +23,22 @@ import org.springframework.security.web.context.request.async.WebAsyncManagerInt
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserService userService;
+
+    /**
+     * 匿名用户
+     */
+    private final AnonymousUser anonymousUser = new AnonymousUser();
+
+    /**
+     * 密码编码器
+     */
+    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
     /**
      * 整个spring-security需要忽略的请求,作者建议这些请求一般是一些静态资源
      */
     private final String[] ignoreUrls = {"/swagger-ui.html", "/swagger-resources/**", "/webjars/**", "/v2/api-docs"};
-    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
 
     public WebSecurityConfig(UserService userService) {
         // 禁用默认的配置,对框架不熟悉最好不要设置这个值
@@ -37,14 +48,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http    // 添加异步认证管理者集成过滤器
-                .addFilter(new WebAsyncManagerIntegrationFilter())
+        http
                 // 添加用户名密码认证配置者
-                .apply(new UsernamePasswordAuthenticationConfigurer<>()).and()
+                .apply(new UsernamePasswordAuthenticationConfigurer<>())
+                .and()
+
                 // 添加jwt认证配置者
-                .apply(new JwtAuthenticationConfigurer<>()).and()
+                .apply(new JwtAuthenticationConfigurer<>())
+                .and()
+
                 // 添加匿名认证配置者
-                .anonymous().and()
+                .anonymous().principal(anonymousUser).authorities(anonymousUser.getAuthorities())
+                .and()
+
                 // 配置认证失败和拒绝访问处理器
                 .exceptionHandling()
                 .authenticationEntryPoint(new CustomizedAuthenticationEntryPoint())

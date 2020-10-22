@@ -37,6 +37,7 @@ import static com.zyc.security.common.util.WebUtil.response;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     protected AuthenticationDetailsSource<HttpServletRequest, ?> authenticationDetailsSource = new WebAuthenticationDetailsSource();
+
     /**
      * 只匹配带有Authentication请求头的请求
      */
@@ -66,7 +67,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             response("系统繁忙，请稍后再试");
             return;
         }
-        log.debug("Updating SecurityContextHolder to contain：" + authentication);
+        log.debug("Updating SecurityContextHolder to contain: " + authentication);
         SecurityContextHolder.getContext().setAuthentication(authentication);
         filterChain.doFilter(request, response);
 

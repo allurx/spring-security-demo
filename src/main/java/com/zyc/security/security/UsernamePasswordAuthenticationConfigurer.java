@@ -33,6 +33,12 @@ public class UsernamePasswordAuthenticationConfigurer<B extends HttpSecurityBuil
         super(new UsernamePasswordAuthenticationFilter(LOGIN_PROCESSING_REQUEST_MATCHER), null);
     }
 
+    /**
+     * 不需要父类的配置逻辑，所以重写了父类的方法然后保留一个空的方法体，注意不要删除这个空的
+     * 方法，否则spring-security会覆盖我们自定义的配置。
+     *
+     * @param builder {@link HttpSecurityBuilder}
+     */
     @Override
     public void init(B builder) {
         log.info("UsernamePasswordAuthenticationConfigurer is configuring");

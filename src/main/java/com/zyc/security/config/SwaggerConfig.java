@@ -44,7 +44,6 @@ public class SwaggerConfig {
                 .build();
     }
 
-
     /**
      * @return api文档的详细信息
      */

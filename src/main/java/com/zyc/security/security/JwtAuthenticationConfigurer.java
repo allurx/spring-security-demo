@@ -12,8 +12,7 @@ import javax.servlet.Filter;
  *
  * @author zyc
  */
-public class JwtAuthenticationConfigurer<B extends HttpSecurityBuilder<B>>
-        extends AbstractHttpConfigurer<JwtAuthenticationConfigurer<B>, B> {
+public class JwtAuthenticationConfigurer<B extends HttpSecurityBuilder<B>> extends AbstractHttpConfigurer<JwtAuthenticationConfigurer<B>, B> {
 
     private static final Class<? extends Filter> BEFORE_FILTER = UsernamePasswordAuthenticationFilter.class;
     private final JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter();

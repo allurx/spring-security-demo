@@ -12,8 +12,8 @@ import java.util.Collection;
  */
 public class JwtAuthenticationToken extends AbstractAuthenticationToken {
 
-    private final Object principal;
-    private final Object credentials;
+    private final transient Object principal;
+    private final transient Object credentials;
 
     public JwtAuthenticationToken(Object principal, Object credentials) {
         super(null);
@@ -37,6 +37,16 @@ public class JwtAuthenticationToken extends AbstractAuthenticationToken {
     @Override
     public Object getPrincipal() {
         return principal;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return super.equals(o);
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
     }
 
 }
