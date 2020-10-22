@@ -1,5 +1,6 @@
 package com.zyc.security.security;
 
+import com.google.gson.Gson;
 import com.zyc.security.common.constant.StringConstant;
 import com.zyc.security.model.User;
 import com.zyc.security.service.UserService;
@@ -20,6 +21,7 @@ import java.io.IOException;
 public class UsernamePasswordAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
     private UserService userService;
+    private static final Gson GSON = new Gson();
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
@@ -27,6 +29,6 @@ public class UsernamePasswordAuthenticationSuccessHandler implements Authenticat
         userService.saveSession(user);
         response.setContentType(StringConstant.JSON_CONTENT_TYPE);
         response.setCharacterEncoding(StringConstant.UTF_8);
-        response.getWriter().write(user.toString());
+        response.getWriter().write(GSON.toJson(user));
     }
 }

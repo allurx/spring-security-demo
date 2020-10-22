@@ -14,9 +14,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class RedisService {
 
-    private final RedisTemplate<Object, Object> redisTemplate;
+    private final RedisTemplate<String, Object> redisTemplate;
 
-    public RedisService(@Qualifier("jsonRedisTemplate") RedisTemplate<Object, Object> redisTemplate) {
+    public RedisService(@Qualifier("jsonRedisTemplate") RedisTemplate<String, Object> redisTemplate) {
         this.redisTemplate = redisTemplate;
     }
 

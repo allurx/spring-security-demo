@@ -1,6 +1,5 @@
 package com.zyc.security.model;
 
-import com.alibaba.fastjson.JSON;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -77,10 +76,5 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
-    }
-
-    @Override
-    public String toString() {
-        return JSON.toJSONString(this);
     }
 }
