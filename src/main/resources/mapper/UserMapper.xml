@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.zyc.security.dao.UserMapper">
+<mapper namespace="red.zyc.security.dao.UserMapper">
 
     <!--根据昵称查询用户-->
-    <resultMap id="getUserByUsername" type="com.zyc.security.model.User">
+    <resultMap id="getUserByUsername" type="red.zyc.security.model.User">
         <id column="id" property="id"/>
-        <collection property="authorities" ofType="com.zyc.security.model.Role">
+        <collection property="authorities" ofType="red.zyc.security.model.Role">
             <id column="roleId" property="id"/>
         </collection>
     </resultMap>

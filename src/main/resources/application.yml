@@ -3,7 +3,7 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/spring-security-demo?characterEncoding=utf8&autoReconnect=true&useSSL=false
+    url: jdbc:mysql://localhost:3306/spring-security-demo
     username: root
     password: 123456
     type: com.zaxxer.hikari.HikariDataSource
@@ -29,12 +29,11 @@ spring:
         max-idle: 8
         min-idle: 0
 mybatis:
-  type-aliases-package: com.zyc.security.common.model
   mapper-locations: classpath:mapper/*.xml
   configuration:
     auto-mapping-behavior: full
 logging:
   level:
-    com.zyc.security: debug
+    red.zyc.security: debug
     org.springframework.security: debug
 

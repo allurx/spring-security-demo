@@ -9,11 +9,11 @@
         <version>2.1.5.RELEASE</version>
     </parent>
 
-    <groupId>com.zyc.demo</groupId>
+    <groupId>red.zyc</groupId>
     <artifactId>spring-security-demo</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>spring-security-demo</name>
-    <description>spring-security</description>
+    <description>spring-security-demo</description>
 
     <properties>
         <commons-lang3.version>3.8</commons-lang3.version>
