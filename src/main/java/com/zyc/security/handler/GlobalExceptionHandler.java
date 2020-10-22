@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<?> exception(Exception exception) throws Exception {
+    public ResponseEntity<Object> exception(Exception exception) throws Exception {
         if (exception instanceof AccessDeniedException
                 || exception instanceof AuthenticationException) {
             throw exception;

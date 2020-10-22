@@ -12,7 +12,10 @@ import java.util.Optional;
  * @author zyc
  */
 @Slf4j
-public class WebUtil {
+public final class WebUtil {
+
+    private WebUtil() {
+    }
 
     /**
      * @return 绑定到当前线程的HttpServletResponse
@@ -20,22 +23,24 @@ public class WebUtil {
     private static HttpServletResponse getHttpServletResponse() {
         return Optional.ofNullable((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
                 .map(ServletRequestAttributes::getResponse)
-                .get();
+                .orElseThrow(() -> new RuntimeException("HttpServletResponse must not be null"));
     }
 
-
+    /**
+     * 写响应信息
+     *
+     * @param message 响应信息
+     */
     public static void response(String message) {
         Optional.of(getHttpServletResponse())
-                .ifPresent(
-                        response -> {
-                            try {
-                                response.setCharacterEncoding(StringConstant.UTF_8);
-                                response.getWriter().write(message);
-                            } catch (Exception e) {
-                                log.error(e.getMessage(), e);
-                            }
-                        });
-
+                .ifPresent(response -> {
+                    try {
+                        response.setCharacterEncoding(StringConstant.UTF_8);
+                        response.getWriter().write(message);
+                    } catch (Exception e) {
+                        log.error(e.getMessage(), e);
+                    }
+                });
     }
 
 }

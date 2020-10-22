@@ -1,12 +1,12 @@
 package com.zyc.security.security;
 
+import com.zyc.security.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.HttpSecurityBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractAuthenticationFilterConfigurer;
 import org.springframework.security.config.annotation.web.configurers.FormLoginConfigurer;
-import org.springframework.security.web.authentication.AuthenticationFailureHandler;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
@@ -19,35 +19,37 @@ import javax.servlet.Filter;
  * @author zyc
  * @see FormLoginConfigurer
  */
+@Slf4j
 public class UsernamePasswordAuthenticationConfigurer<B extends HttpSecurityBuilder<B>>
         extends AbstractAuthenticationFilterConfigurer<B, UsernamePasswordAuthenticationConfigurer<B>, UsernamePasswordAuthenticationFilter> {
 
-    private static RequestMatcher loginProcessingRequestMatcher = new AntPathRequestMatcher("/user/login", "POST");
-    private AuthenticationSuccessHandler authenticationSuccessHandler = new UsernamePasswordAuthenticationSuccessHandler();
-    private AuthenticationFailureHandler authenticationFailureHandler = new UsernamePasswordAuthenticationFailureHandler();
-    private Class<? extends Filter> atFilter = org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter.class;
+    private static final RequestMatcher LOGIN_PROCESSING_REQUEST_MATCHER = new AntPathRequestMatcher("/user/login", "POST");
+    private static final Class<? extends Filter> AT_FILTER = org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter.class;
+    private final UsernamePasswordAuthenticationSuccessHandler authenticationSuccessHandler = new UsernamePasswordAuthenticationSuccessHandler();
+    private final UsernamePasswordAuthenticationFailureHandler authenticationFailureHandler = new UsernamePasswordAuthenticationFailureHandler();
+    private final UsernamePasswordAuthenticationFilter authenticationFilter = this.getAuthenticationFilter();
 
     public UsernamePasswordAuthenticationConfigurer() {
-        super(new UsernamePasswordAuthenticationFilter(loginProcessingRequestMatcher), null);
+        super(new UsernamePasswordAuthenticationFilter(LOGIN_PROCESSING_REQUEST_MATCHER), null);
     }
 
     @Override
     public void init(B builder) {
+        log.info("UsernamePasswordAuthenticationConfigurer is configuring");
     }
 
     @Override
     public void configure(B builder) {
-        UsernamePasswordAuthenticationFilter filter = this.getAuthenticationFilter();
-        filter.setAuthenticationSuccessHandler(authenticationSuccessHandler);
-        filter.setAuthenticationFailureHandler(authenticationFailureHandler);
-        filter.setAuthenticationManager(builder.getSharedObject(AuthenticationManager.class));
-        ((HttpSecurity) builder).addFilterAt(postProcess(filter), atFilter);
+        authenticationFilter.setAuthenticationSuccessHandler(authenticationSuccessHandler);
+        authenticationFilter.setAuthenticationFailureHandler(authenticationFailureHandler);
+        authenticationFilter.setAuthenticationManager(builder.getSharedObject(AuthenticationManager.class));
+        authenticationSuccessHandler.setUserService(builder.getSharedObject(UserService.class));
+        ((HttpSecurity) builder).addFilterAt(postProcess(authenticationFilter), AT_FILTER);
     }
 
     @Override
     protected RequestMatcher createLoginProcessingUrlMatcher(String loginProcessingUrl) {
         return new AntPathRequestMatcher(loginProcessingUrl, "POST");
     }
-
 
 }

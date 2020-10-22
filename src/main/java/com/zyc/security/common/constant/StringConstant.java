@@ -5,7 +5,10 @@ import java.nio.charset.StandardCharsets;
 /**
  * @author zyc
  */
-public class StringConstant {
+public final class StringConstant {
+
+    private StringConstant() {
+    }
 
     public static final String UTF_8 = StandardCharsets.UTF_8.name();
 

@@ -26,8 +26,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     /**
      * 整个spring-security需要忽略的请求,作者建议这些请求一般是一些静态资源
      */
-    private String[] ignoreUrls = {"/swagger-ui.html", "/swagger-resources/**", "/webjars/**", "/v2/api-docs"};
-    private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    private final String[] ignoreUrls = {"/swagger-ui.html", "/swagger-resources/**", "/webjars/**", "/v2/api-docs"};
+    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     public WebSecurityConfig(UserService userService) {
         // 禁用默认的配置,对框架不熟悉最好不要设置这个值
@@ -48,8 +48,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // 配置认证失败和拒绝访问处理器
                 .exceptionHandling()
                 .authenticationEntryPoint(new CustomizedAuthenticationEntryPoint())
-                .accessDeniedHandler(new CustomizedAccessDeniedHandler())
-        ;
+                .accessDeniedHandler(new CustomizedAccessDeniedHandler());
+
+        // 设置一些共享的对象
+        http.setSharedObject(UserService.class, userService);
     }
 
     @Override

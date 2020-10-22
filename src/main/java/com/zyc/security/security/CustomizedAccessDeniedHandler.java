@@ -11,9 +11,9 @@ import static com.zyc.security.common.util.WebUtil.response;
 
 /**
  * 接口无权访问处理器
- * {@link ExceptionTranslationFilter#handleSpringSecurityException}
  *
  * @author zyc
+ * @see ExceptionTranslationFilter#handleSpringSecurityException
  */
 public class CustomizedAccessDeniedHandler implements AccessDeniedHandler {
 

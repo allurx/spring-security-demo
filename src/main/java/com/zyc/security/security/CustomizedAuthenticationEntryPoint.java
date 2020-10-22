@@ -11,9 +11,9 @@ import static com.zyc.security.common.util.WebUtil.response;
 
 /**
  * 接口需要特定的权限，但是当前用户是匿名用户或者是记住我的用户
- * {@link ExceptionTranslationFilter#handleSpringSecurityException}
  *
  * @author zyc
+ * @see ExceptionTranslationFilter#handleSpringSecurityException
  */
 public class CustomizedAuthenticationEntryPoint implements AuthenticationEntryPoint {
 

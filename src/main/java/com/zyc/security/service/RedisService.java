@@ -1,4 +1,4 @@
-package com.zyc.security.common.util;
+package com.zyc.security.service;
 
 import com.zyc.security.common.constant.enums.RedisKey;
 import com.zyc.security.model.User;
@@ -12,11 +12,11 @@ import org.springframework.stereotype.Component;
  * @author zyc
  */
 @Component
-public class RedisUtil {
+public class RedisService {
 
     private final RedisTemplate<Object, Object> redisTemplate;
 
-    public RedisUtil(@Qualifier("jsonRedisTemplate") RedisTemplate<Object, Object> redisTemplate) {
+    public RedisService(@Qualifier("jsonRedisTemplate") RedisTemplate<Object, Object> redisTemplate) {
         this.redisTemplate = redisTemplate;
     }
 

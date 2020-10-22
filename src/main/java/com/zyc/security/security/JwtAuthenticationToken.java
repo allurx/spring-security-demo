@@ -12,8 +12,8 @@ import java.util.Collection;
  */
 public class JwtAuthenticationToken extends AbstractAuthenticationToken {
 
-    private Object principal;
-    private Object credentials;
+    private final Object principal;
+    private final Object credentials;
 
     public JwtAuthenticationToken(Object principal, Object credentials) {
         super(null);

@@ -61,7 +61,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             log.error(e.getMessage(), e);
             response(e.getMessage());
             return;
-        } catch (Throwable e) {
+        } catch (Exception e) {
             log.error(e.getMessage(), e);
             response("系统繁忙，请稍后再试");
             return;
